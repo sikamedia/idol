@@ -45,7 +45,7 @@ body {
 	text-align: center;
 }
 
-.topTest {
+.top {
 	background-color: #ffffff;
 	position: absolute;
 	top: 0px;
@@ -54,20 +54,19 @@ body {
 	width: 100%;
 }
 
-.leftHalf{
-	background-color: #ff9e2c;
+.left{
 	position: absolute;
-	top: 60px;
+	top: 70px;
 	left: 0px;
-	height: 80%;
-	width: 35%;
+	height: 100%;
+	width: 25%;
 }
 
-.rightHalf {
+.right {
 	background-color: #b6701e;
 	position: absolute;
-	top: 60px;
+	top: 70px;
 	right: 0px;
-	height: 80%;
-	width: 65%;
+	height: 100%;
+	width: 75%;
 }

@@ -26,9 +26,10 @@ class ParticipantList extends Component {
 
 	onItemClicked = item => event => {
 
-		this.props.actions.videoAssetsRequest(item.person_tag);
+
 		this.props.actions.setShowParticipant();
-		this.props.actions.selectParticipant(item.person_tag);
+		this.props.actions.videoAssetsRequest(item.person_tag);
+		this.props.actions.selectParticipant(item.person_tag, item.name, item.description, item.image.url);
 
 
 
@@ -96,7 +97,7 @@ const mapStateToProps = (state) => {
 
 	return {
 		participants: state.FetchParticipantReducer.participants,
-		selectedParticipant: state.FetchParticipantReducer.selectedParticipant,
+		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag,
 		videoAssets: state.VideoReducer.videoAssets
 	}
 }

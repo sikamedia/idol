@@ -4,7 +4,10 @@ import {FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS,
 const initialState = {
 	participants: [],
 	isFetching: false,
-	selectedParticipant: ''
+	selectedParticipantTag: '',
+	selectedParticipantName: '',
+	selectedParticipantDescription: '',
+	selectedParticipantImageUrl: ''
 
 }
 
@@ -20,7 +23,8 @@ const fetchParticipant = (state=initialState, action) => {
 			return state;
 
 		case SELECT_PARTICIPANT:
-			return {...state, selectedParticipant: action.nameTag};
+			return {...state, selectedParticipantTag: action.nameTag, selectedParticipantName: action.name,
+				selectedParticipantDescription: action.description, selectedParticipantImageUrl: action.imageUrl};
 		default:
 			return state;
 

@@ -42,7 +42,10 @@ export class ParticipantDetails extends Component {
 		return (
 			<div className={styles.container}>
 				{this.renderBackButton()}
-				<ParticipantInfo name={this.props.selectedParticipant}/>
+				<ParticipantInfo name={this.props.selectedParticipantName}
+								 imageUrl={this.props.selectedParticipantImageUrl}
+								 description={this.props.selectedParticipantDescription}
+				/>
 				<ParticipantVideos totalHits={this.props.videoAssets.total_hits}/>
 
 			</div>
@@ -57,7 +60,7 @@ export class ParticipantDetails extends Component {
 
 	renderBackButton() {
 		return (
-			<div className={styles.topTest}>
+			<div className={styles.top}>
 				<h1 onClick={this.goBackToMain} style={{textDecoration: 'underline'}}>Back</h1>
 			</div>
 		);
@@ -74,7 +77,10 @@ ParticipantDetails.propTypes = {
 const mapStateToProps = (state) => {
 
 	return {
-		selectedParticipant: state.FetchParticipantReducer.selectedParticipant,
+		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag,
+		selectedParticipantName: state.FetchParticipantReducer.selectedParticipantName,
+		selectedParticipantDescription: state.FetchParticipantReducer.selectedParticipantDescription,
+		selectedParticipantImageUrl: state.FetchParticipantReducer.selectedParticipantImageUrl,
 		videoAssets: state.VideoReducer.videoAssets
 	}
 }
@@ -91,17 +97,33 @@ class ParticipantInfo extends Component {
 
 	constructor(props) {
 		super(props);
+		this.convertTextArray = this.convertTextArray.bind(this);
+		this.renderDescription = this.renderDescription.bind(this);
 	}
 
 	render() {
 
 		return (
-			<div className={styles.leftHalf}>
-				<p>{this.props.name}</p>
+			<div className={styles.left}>
+				<ul>
+					<div className={styles.withBgSize} style={{backgroundImage: `url(${this.props.imageUrl})`}}></div>
+					<div> <h3 style={{textAlign: 'left'}}> {this.props.name} </h3> </div>
+					<div> {this.convertTextArray(this.props.description).map(this.renderDescription)}</div>
+				</ul>
 			</div>
 
 		);
 	}
+
+	renderDescription = (text) => {
+		return (<h6>{text}</h6>);
+	}
+
+	convertTextArray = (texts) => {
+		let textArray = texts.split('\r\n\r');
+		return textArray;
+	}
+
 
 }
 
@@ -115,7 +137,7 @@ class ParticipantVideos extends Component {
 	render() {
 
 		return (
-			<div className={styles.rightHalf}>
+			<div className={styles.right}>
 				<p>{this.props.totalHits}</p>
 			</div>
 

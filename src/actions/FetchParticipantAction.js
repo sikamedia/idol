@@ -32,9 +32,12 @@ export const requestFailure = () => {
 	}
 }
 
-export const selectParticipant = (nameTag) => {
+export const selectParticipant = (nameTag, name, description, imageUrl) => {
 	return {
 		type: SELECT_PARTICIPANT,
-		nameTag
+		nameTag,
+		name,
+		description,
+		imageUrl
 	}
 }

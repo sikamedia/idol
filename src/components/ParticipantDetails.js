@@ -24,6 +24,7 @@ export class ParticipantDetails extends Component {
 
 	componentWillMount() {
 
+		//this.props.actions.videoAssetsRequest(this.props.selectedParticipantTag);
 		/*
 
 		fetch("http://api.tv4play.se/play/video_assets.json?tags=ludvig-turner&page=4").then(function (response) {
@@ -46,7 +47,8 @@ export class ParticipantDetails extends Component {
 								 imageUrl={this.props.selectedParticipantImageUrl}
 								 description={this.props.selectedParticipantDescription}
 				/>
-				<ParticipantVideos totalHits={this.props.videoAssets.total_hits}/>
+				<ParticipantVideos totalHits={this.props.videoAssets.total_hits}
+								   results= {this.props.videoAssets.results}/>
 
 			</div>
 
@@ -70,7 +72,8 @@ export class ParticipantDetails extends Component {
 
 ParticipantDetails.propTypes = {
 	actions: React.PropTypes.shape({
-		setShowParticipant: React.PropTypes.func
+		setShowParticipant: React.PropTypes.func,
+		videoAssetsRequest: React.PropTypes.func
 	})
 };
 
@@ -90,7 +93,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails)
-
 
 
 class ParticipantInfo extends Component {
@@ -139,6 +141,7 @@ class ParticipantVideos extends Component {
 		return (
 			<div className={styles.right}>
 				<p>{this.props.totalHits}</p>
+				<p>{this.props.results[0].id}</p>
 			</div>
 
 		);

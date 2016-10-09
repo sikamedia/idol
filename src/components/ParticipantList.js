@@ -27,7 +27,6 @@ class ParticipantList extends Component {
 
 
 		this.props.actions.setShowParticipant();
-		//this.props.actions.videoAssetsRequest(item.person_tag);
 		this.props.actions.selectParticipant(item.person_tag, item.name, item.description, item.image.url);
 
 

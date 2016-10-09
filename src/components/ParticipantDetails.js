@@ -1,11 +1,11 @@
-import React, {Component} from 'react'
-import styles from '../../public/style.css'
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as UIAction from '../actions/UIAction'
-import * as FetchParticipantAction from '../actions/FetchParticipantAction'
-import * as VideoAction from '../actions/VideoAction'
-//http://api.tv4play.se/play/video_assets.json?tags=ludvig-turner&page=4
+import React, {Component} from "react";
+import styles from "../../public/style.css";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as UIAction from "../actions/UIAction";
+import * as FetchParticipantAction from "../actions/FetchParticipantAction";
+import * as VideoAction from "../actions/VideoAction";
+import * as PaginationAction from "../actions/PaginationAction";
 
 export class ParticipantDetails extends Component {
 
@@ -14,41 +14,28 @@ export class ParticipantDetails extends Component {
 		this.renderBackButton = this.renderBackButton.bind(this);
 		this.goBackToMain = this.goBackToMain.bind(this);
 
-		this.state = {
-			name: "",
-			video_assets: [],
-			video_hits: 0,
-			which_page: 0
-		}
 	}
 
 	componentWillMount() {
-
-		this.props.actions.videoAssetsRequest(this.props.selectedParticipantTag)
-		/*
-
-		fetch("http://api.tv4play.se/play/video_assets.json?tags=ludvig-turner&page=4").then(function (response) {
-			return response.json()
-		}).then((json) => {
-			//console.log('parsed json', json)
-			this.setState({video_hits: json.total_hits});
-		}).catch((ex) => {
-			console.log('parsing failed', ex)
-		}) */
-
+		this.props.actions.videoAssetsRequest(this.props.selectedParticipantTag, this.props.currentPage)
 	}
 
 
 	render() {
+
 		return (
+
 			<div className={styles.container}>
 				{this.renderBackButton()}
 				<ParticipantInfo name={this.props.selectedParticipantName}
 								 imageUrl={this.props.selectedParticipantImageUrl}
 								 description={this.props.selectedParticipantDescription}
 				/>
-				<ParticipantVideos totalHits={this.props.videoAssets.total_hits}
-								   results= {this.props.videoAssets.results}/>
+				<ParticipantVideos totalPages={Math.ceil(this.props.videoAssets.total_hits / 12)}
+								   totalHits={this.props.videoAssets.total_hits}
+								   results={this.props.videoAssets.results}
+								   goPage={this.props.actions.goPage}
+								   currentPage={this.props.currentPage}/>
 
 			</div>
 
@@ -56,7 +43,7 @@ export class ParticipantDetails extends Component {
 
 	}
 
-	goBackToMain  = event => {
+	goBackToMain = event => {
 		this.props.actions.setShowParticipant();
 	}
 
@@ -73,7 +60,10 @@ export class ParticipantDetails extends Component {
 ParticipantDetails.propTypes = {
 	actions: React.PropTypes.shape({
 		setShowParticipant: React.PropTypes.func,
-		videoAssetsRequest: React.PropTypes.func
+		videoAssetsRequest: React.PropTypes.func,
+		prePage: React.PropTypes.func,
+		nextPage: React.PropTypes.func,
+		goPage: React.PropTypes.func
 	})
 };
 
@@ -84,12 +74,13 @@ const mapStateToProps = (state) => {
 		selectedParticipantName: state.FetchParticipantReducer.selectedParticipantName,
 		selectedParticipantDescription: state.FetchParticipantReducer.selectedParticipantDescription,
 		selectedParticipantImageUrl: state.FetchParticipantReducer.selectedParticipantImageUrl,
-		videoAssets: state.VideoReducer.videoAssets
+		videoAssets: state.VideoReducer.videoAssets,
+		currentPage: state.PaginationReducer.currentPage
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return { actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction}, dispatch) }
+	return {actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction, ...PaginationAction}, dispatch)}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails)
@@ -103,14 +94,15 @@ class ParticipantInfo extends Component {
 		this.renderDescription = this.renderDescription.bind(this);
 	}
 
+
 	render() {
 
 		return (
 			<div className={styles.left}>
 				<ul>
 					<div className={styles.withBgSize} style={{backgroundImage: `url(${this.props.imageUrl})`}}></div>
-					<div> <h3 style={{textAlign: 'left'}}> {this.props.name} </h3> </div>
-					<div> {this.convertTextArray(this.props.description).forEach(this.renderDescription)}</div>
+					<div><h3 style={{textAlign: 'left'}}> {this.props.name} </h3></div>
+					<div> {this.convertTextArray(this.props.description).map(this.renderDescription)}</div>
 				</ul>
 			</div>
 
@@ -134,67 +126,96 @@ class ParticipantVideos extends Component {
 
 	constructor(props) {
 		super(props);
+		this.pagerInstance = this.pagerInstance.bind(this);
 		this.renderVideoClip = this.renderVideoClip.bind(this);
-		this.isImageOk = this.isImageOk.bind(this);
+		this.renderPager = this.renderPager.bind(this)
+
 	}
 
-	isImageOk(img) {
-		// During the onload event, IE correctly identifies any images that
-		// weren’t downloaded as not complete. Others should too. Gecko-based
-		// browsers act like NS4 in that they report this incorrectly.
-		if (!img.complete) {
-			return false;
-		}
 
-		// However, they do have two very useful properties: naturalWidth and
-		// naturalHeight. These give the true size of the image. If it failed
-		// to load, either of these should be zero.
+	componentDidUpdate() {
+		this.props.goPage(this.props.currentPage, this.props.totalPages);
 
-		if (typeof img.naturalWidth !== "undefined" && img.naturalWidth === 0) {
-			return false;
-		}
-
-		// No other way of checking: assume it’s ok.
-		return true;
 	}
-
 
 	renderVideoClip(item) {
-		console.log(this.isImageOk(item.image));
 		return (
-			<a href={"http://www.tv4play.se/program/idol?video_id=".concat(item.id)}> <li className={styles.item} key={item.id}>
+			<a href={"http://www.tv4play.se/program/idol?video_id=".concat(item.id)}>
+				<li className={styles.item} key={item.id}>
 
-					<div> <img src={item.image} style={{width: 288, height: 218}} alt={"video_image".concat(item.id)} /> </div>
-					<div> <p>Title: {item.title}</p></div>
-					<div> <p>Description: {item.description}</p></div>
+					<div><img src={item.image} style={{width: 288, height: 218}} alt={"video_image".concat(item.id)}/>
+					</div>
+					<div><p>Title: {item.title}</p></div>
+					<div><p>Description: {item.description}</p></div>
 
-			</li></a>
+				</li>
+			</a>
 
 		);
 	}
 
 	render() {
 
+		console.log(this.props.currentPage === this.props.totalPages);
 		return (
+
 			<div className={styles.right}>
+				{this.pagerInstance(this.props.currentPage, this.props.totalPages)}
 				<ul>
 					{
-
-						(this.props.results)? this.props.results.map(this.renderVideoClip) : null
-
+						(this.props.results) ? this.props.results.map(this.renderVideoClip) : null
 					}
 
 				</ul>
 			</div>
 
+
 		);
 	}
 
+	renderPager = (isPrevious, isNext) => {
 
+		return (
+			<div id={styles.container}>
+				<div id={styles.left}>
+					{
+						(isPrevious) ? <em style={{textDecoration: 'underline'}}> &lt;&lt;Previous</em> :
+							<em> &lt;&lt;Previous</em>
+					}
+				</div>
 
-	//need an unit test
-	calculateTotalPageNumbers = (total_hits, numbers_per_page) => {
-		return Math.ceil(total_hits / numbers_per_page);
+				<div id={styles.center}>
+					Page: {this.props.totalPages}
+				</div>
+
+				<div id={styles.right}>
+					{
+						(isNext) ? <em style={{textDecoration: 'underline'}}>Next&gt;&gt;</em> : <em >Next&gt;&gt;</em>
+					}
+				</div>
+			</div>
+		)
+
 	}
+
+
+	pagerInstance = (currentPage, totalPages) => {
+
+		if (currentPage === totalPages && (currentPage - 1) === 0 && (currentPage + 1) > totalPages) {
+			return this.renderPager(false, false);
+		}
+
+		else if (currentPage === totalPages && (currentPage - 1) === 0) {
+			return this.renderPager(false, true);
+		}
+
+		else if (currentPage === totalPages && (currentPage + 1) > totalPages) {
+			return this.renderPager(true, false);
+		} else {
+			return this.renderPager(true, true);
+		}
+
+	}
+
 
 }

@@ -2,7 +2,8 @@ import  {GO_TO_PRE_PAGE, GO_TO_NEXT_PAGE, GO_TO_SPECIFIC_PAGE} from '../actions/
 
 const initialState = {
 	currentPage: 1,
-	totalPage: 0
+	totalPages: 0
+
 }
 
 
@@ -21,13 +22,13 @@ const paginationClick = (state=initialState, action) => {
 			if (state.currentPage == state.totalPage) {
 				return state;
 			} else {
-				return {...state, currentPage: state.currentPage + 1 }
+				return {...state, currentPage: state.currentPage + 1};
 			}
 		case GO_TO_SPECIFIC_PAGE:
 			if (state.currentPage == action.pageNumber) {
-				return state;
+				return {...state, totalPages: action.totalPages};
 			} else {
-				return {...state, currentPage: state.pageNumber};
+				return {...state, currentPage: action.pageNumber, totalPages: action.totalPages};
 		}
 
 		default:

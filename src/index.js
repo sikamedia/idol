@@ -45,10 +45,3 @@ render(
 		</Router>
 	</Provider>,
 	document.getElementById('root'));
-
-/*
-render(
-	<Provider store={store}>
-		<AppIdol/>
-	</Provider>,
-	document.getElementById('root'));*/

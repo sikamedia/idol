@@ -17,9 +17,10 @@ export const nextPage = () => {
 	}
 }
 
-export const goPage = (pageNumber) => {
+export const goPage = (pageNumber, totalPages) => {
 	return {
 		type: GO_TO_SPECIFIC_PAGE,
-		pageNumber
+		pageNumber,
+		totalPages
 	}
 }

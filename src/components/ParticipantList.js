@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import styles from '../../public/style.css'
 import 'whatwg-fetch'
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+import {bindActionCreators} from 'redux'
 import * as UIAction from '../actions/UIAction'
 import * as FetchParticipantAction from '../actions/FetchParticipantAction'
 import * as VideoAction from '../actions/VideoAction'
@@ -15,7 +15,6 @@ class ParticipantList extends Component {
 		super(props);
 		this.onItemClicked = this.onItemClicked.bind(this);
 		this.renderParticipant = this.renderParticipant.bind(this);
-		//this.calculateTotalPageNumbers = this.calculateTotalPageNumbers.bind(this);
 	}
 
 	componentWillMount() {
@@ -28,31 +27,11 @@ class ParticipantList extends Component {
 
 
 		this.props.actions.setShowParticipant();
-		this.props.actions.videoAssetsRequest(item.person_tag);
+		//this.props.actions.videoAssetsRequest(item.person_tag);
 		this.props.actions.selectParticipant(item.person_tag, item.name, item.description, item.image.url);
 
 
-
-		/*
-		fetch("http://api.tv4play.se/play/video_assets.json?tags=ludvig-turner").then(function (response) {
-			return response.json()
-		}).then((json) => {
-			console.log('parsed json', json.total_hits);
-			console.log('pages: ', this.calculateTotalPageNumbers(json.total_hits , 12));
-
-		}).catch((ex) => {
-			console.log('parsing failed', ex)
-		})*/
-
-
-
 	}
-
-	//need an unit test
-	calculateTotalPageNumbers = (total_hits, numbers_per_page) => {
-		return Math.ceil(total_hits / numbers_per_page);
-	}
-
 
 
 	renderParticipant(item) {
@@ -90,7 +69,7 @@ ParticipantList.propTypes = {
 };
 
 function mapDispatchToProps(dispatch) {
-	return { actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction}, dispatch) }
+	return {actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction}, dispatch)}
 }
 
 const mapStateToProps = (state) => {

@@ -2,7 +2,7 @@ import {FETCH_POSTS_REQUEST_VIDEO, FETCH_POSTS_SUCCESS_VIDEO,
 	FETCH_POSTS_FAILURE_VIDEO} from '../actions/VideoAction'
 
 const initialState = {
-	videoAssets: {},
+	videoAssets: [],
 	isFetching: false
 }
 

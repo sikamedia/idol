@@ -8,7 +8,7 @@ export const videoAssetsRequest = (nameTage) => (dispatch, getState) => {
 		type: FETCH_POSTS_REQUEST_VIDEO
 	})
 
-	console.log("this", "http://api.tv4play.se/play/video_assets.json?tags=".concat(nameTage));
+	console.log("this video assets fetch", "http://api.tv4play.se/play/video_assets.json?tags=".concat(nameTage));
 	fetch("http://api.tv4play.se/play/video_assets.json?tags=".concat(nameTage)).then(function (response) {
 		return response.json()
 	}).then((json) => {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-//import {participants} from './mock'
+//import {participants} from '../../test/mock_data/mock'
 import styles from '../../public/style.css'
 import 'whatwg-fetch'
 import {connect} from 'react-redux'

@@ -47,7 +47,9 @@ module.exports = {
   resolve: {
     alias: {
       'sinon': 'sinon/pkg/sinon'
-    }
+    },
+    root: path.resolve(__dirname, 'src'),
+    extensions: ['', '.js', '.jsx']
   },
   externals: {
     'jsdom': 'window',

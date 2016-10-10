@@ -6,6 +6,9 @@ import * as UIAction from '../actions/UIAction'
 import * as FetchParticipantAction from '../actions/FetchParticipantAction'
 import * as VideoAction from '../actions/VideoAction'
 import * as PaginationAction from '../actions/PaginationAction'
+import {StringOperator} from 'common/StringOperator'
+
+const stringOperator = new StringOperator();
 
 export class ParticipantDetails extends Component {
 
@@ -90,6 +93,7 @@ export class ParticipantInfo extends Component {
 
 	constructor(props) {
 		super(props);
+		this.convertTextArray = stringOperator.convertTextArray
 		this.convertTextArray = this.convertTextArray.bind(this);
 		this.renderDescription = this.renderDescription.bind(this);
 		this.renderDescription = this.renderDescription.bind(this);
@@ -99,11 +103,7 @@ export class ParticipantInfo extends Component {
 		return (<h6>{text}</h6>);
 	}
 
-	//need to test
-	convertTextArray = (texts) => {
-		let textArray = texts.split('\r\n\r');
-		return textArray;
-	}
+
 
 	render() {
 

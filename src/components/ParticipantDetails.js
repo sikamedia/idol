@@ -161,7 +161,6 @@ export class ParticipantVideos extends Component {
 
 	render() {
 
-		console.log(this.props.currentPage === this.props.totalPages);
 		return (
 
 			<div className={styles.right}>
@@ -190,7 +189,7 @@ export class ParticipantVideos extends Component {
 				</div>
 
 				<div id={styles.center}>
-					Page: {this.props.totalPages}
+					Page: {this.props.currentPage}
 				</div>
 
 				<div id={styles.right}>
@@ -210,11 +209,11 @@ export class ParticipantVideos extends Component {
 			return this.renderPager(false, false);
 		}
 
-		else if (currentPage === totalPages && (currentPage - 1) === 0) {
+		else if (currentPage !== totalPages && (currentPage - 1) === 0) {
 			return this.renderPager(false, true);
 		}
 
-		else if (currentPage === totalPages && (currentPage + 1) > totalPages) {
+		else if (currentPage !== totalPages && (currentPage + 1) > totalPages) {
 			return this.renderPager(true, false);
 		} else {
 			return this.renderPager(true, true);

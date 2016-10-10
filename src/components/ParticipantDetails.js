@@ -1,11 +1,11 @@
-import React, {Component} from "react";
-import styles from "../../public/style.css";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import * as UIAction from "../actions/UIAction";
-import * as FetchParticipantAction from "../actions/FetchParticipantAction";
-import * as VideoAction from "../actions/VideoAction";
-import * as PaginationAction from "../actions/PaginationAction";
+import React, {Component} from 'react'
+import styles from '../../public/style.css'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import * as UIAction from '../actions/UIAction'
+import * as FetchParticipantAction from '../actions/FetchParticipantAction'
+import * as VideoAction from '../actions/VideoAction'
+import * as PaginationAction from '../actions/PaginationAction'
 
 export class ParticipantDetails extends Component {
 
@@ -86,14 +86,24 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails)
 
 
-class ParticipantInfo extends Component {
+export class ParticipantInfo extends Component {
 
 	constructor(props) {
 		super(props);
 		this.convertTextArray = this.convertTextArray.bind(this);
 		this.renderDescription = this.renderDescription.bind(this);
+		this.renderDescription = this.renderDescription.bind(this);
 	}
 
+	renderDescription = (text) => {
+		return (<h6>{text}</h6>);
+	}
+
+	//need to test
+	convertTextArray = (texts) => {
+		let textArray = texts.split('\r\n\r');
+		return textArray;
+	}
 
 	render() {
 
@@ -109,20 +119,10 @@ class ParticipantInfo extends Component {
 		);
 	}
 
-	renderDescription = (text) => {
-		return (<h6>{text}</h6>);
-	}
-
-	//need to test
-	convertTextArray = (texts) => {
-		let textArray = texts.split('\r\n\r');
-		return textArray;
-	}
-
 
 }
 
-class ParticipantVideos extends Component {
+export class ParticipantVideos extends Component {
 
 	constructor(props) {
 		super(props);
@@ -138,12 +138,17 @@ class ParticipantVideos extends Component {
 
 	}
 
+	addDefaultSrc(ev){
+		ev.target.src = './public/profile.png';
+	}
+	
 	renderVideoClip(item) {
 		return (
 			<a href={"http://www.tv4play.se/program/idol?video_id=".concat(item.id)}>
 				<li className={styles.item} key={item.id}>
 
-					<div><img src={item.image} style={{width: 288, height: 218}} alt={"video_image".concat(item.id)}/>
+					<div>
+						<img onError={this.addDefaultSrc} src={item.image} style={{width: 288, height: 218}} alt={"video_image_".concat(item.id)}/>
 					</div>
 					<div><p>Title: {item.title}</p></div>
 					<div><p>Description: {item.description}</p></div>

@@ -11,6 +11,11 @@ const apiURL = "http://api.tv4play.se";
 
 
 class AppIdol extends Component {
+
+	constructor(props) {
+		super(props);
+	}
+
 	render() {
 		return (
 			<div>

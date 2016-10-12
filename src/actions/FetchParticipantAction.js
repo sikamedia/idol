@@ -5,10 +5,9 @@ export const SELECT_PARTICIPANT = 'SELECT_PARTICIPANT';
 
 export const request = () => (dispatch, getState) => {
 
+	let fetchPostsRequest = {type: FETCH_POSTS_REQUEST};
 
-	dispatch ( {
-		type: FETCH_POSTS_REQUEST
-	})
+	dispatch (fetchPostsRequest);
 
 	fetch("http://api.tv4play.se/site/programs/idol").then(function (response) {
 		return response.json()

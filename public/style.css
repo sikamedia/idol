@@ -7,6 +7,8 @@ body {
 	padding: 20px 20px;
 	margin: 10px 5px;
 	word-wrap: break-word;
+	cursor: pointer;
+	cursor: hand;
 }
 
 .withBgSize{
@@ -81,3 +83,12 @@ body {
 	height: 20px;
 
 }
+
+a.click:hover, a.click:active {color: red}
+
+.clickPreNextCursor {
+	text-decoration: underline;
+	cursor: pointer;
+	cursor: hand;
+}
+

@@ -53,7 +53,8 @@ export class ParticipantDetails extends Component {
 	renderBackButton() {
 		return (
 			<div className={styles.top}>
-				<h1 onClick={this.goBackToMain} style={{textDecoration: 'underline'}}>Back</h1>
+				<h1 onClick={this.goBackToMain} style={{textDecoration: 'underline',
+					cursor: 'pointer', cursor: 'hand'}}>Back</h1>
 			</div>
 		);
 	}
@@ -106,7 +107,6 @@ export class ParticipantInfo extends Component {
 
 
 	render() {
-
 		return (
 			<div className={styles.left}>
 				<ul>
@@ -129,6 +129,7 @@ export class ParticipantVideos extends Component {
 		this.pagerInstance = this.pagerInstance.bind(this);
 		this.renderVideoClip = this.renderVideoClip.bind(this);
 		this.renderPager = this.renderPager.bind(this)
+		this.goNext = this.goNext.bind(this)
 
 	}
 
@@ -182,25 +183,30 @@ export class ParticipantVideos extends Component {
 		return (
 			<div id={styles.container}>
 				<div id={styles.left}>
-					{
-						(isPrevious) ? <em style={{textDecoration: 'underline'}}> &lt;&lt;Previous</em> :
-							<em> &lt;&lt;Previous</em>
+					{(isPrevious) ? <p> <a  className={styles.clickPreNextCursor}> &lt;&lt;Previous</a> </p> :
+							<p> &lt;&lt;Previous</p>
 					}
 				</div>
 
 				<div id={styles.center}>
-					Page: {this.props.currentPage}
+					<p> <a>Page: {this.props.currentPage} </a></p>
 				</div>
 
 				<div id={styles.right}>
 					{
-						(isNext) ? <em style={{textDecoration: 'underline'}}>Next&gt;&gt;</em> : <em >Next&gt;&gt;</em>
+						(isNext) ? <p><a onClick={this.goNext} className={styles.clickPreNextCursor}>Next&gt;&gt; </a></p> :
+							<p >Next&gt;&gt;</p>
 					}
 				</div>
 			</div>
 		)
 
 	}
+
+	goNext = (event) => {
+		console.log("Go to next!!!");
+	}
+
 
 
 	pagerInstance = (currentPage, totalPages) => {

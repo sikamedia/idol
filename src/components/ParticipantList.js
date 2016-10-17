@@ -44,14 +44,17 @@ class ParticipantList extends Component {
 	}
 
 
-	render() {
 
+	render() {
+		//debugger;
 		return (
-			<ul className={styles.container}>
-				{
-					this.props.participants.map(this.renderParticipant)
-				}
-			</ul>
+			<div>
+				<ul className={styles.container}>
+					{
+						this.props.participants.map(this.renderParticipant)
+					}
+				</ul>
+			</div>
 		);
 	}
 

@@ -3,9 +3,8 @@ import {connect} from 'react-redux'
 
 import ParticipantList from './components/ParticipantList'
 import ParticipantDetails from './components/ParticipantDetails'
-
-
-
+import FacebookLogin from 'react-facebook-login';
+import FacebookButton from 'components/facebook/FacebookButton'
 
 const apiURL = "http://api.tv4play.se";
 
@@ -16,10 +15,14 @@ class AppIdol extends Component {
 		super(props);
 	}
 
+
 	render() {
 		return (
 			<div>
-				{(this.props.showList) ?  <ParticipantList api={apiURL}/> : <ParticipantDetails/>}
+				<FacebookButton />
+				<div>
+					{(this.props.showList) ?  <ParticipantList api={apiURL} /> : <ParticipantDetails/>}
+				</div>
 			</div>
 
 		);

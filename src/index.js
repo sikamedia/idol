@@ -35,6 +35,7 @@ const handleChange = () => {
 const unsubscribe = store.subscribe(handleChange)
 handleChange()
 
+
 render(
 	<Provider store={store}>
 		<Router history={history}>

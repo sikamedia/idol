@@ -96,8 +96,6 @@ export class ParticipantInfo extends Component {
 		super(props);
 		this.convertTextArray = stringOperator.convertTextArray
 		this.convertTextArray = this.convertTextArray.bind(this);
-		this.renderDescription = this.renderDescription.bind(this);
-		this.renderDescription = this.renderDescription.bind(this);
 	}
 
 	renderDescription = (text) => {
@@ -194,8 +192,8 @@ export class ParticipantVideos extends Component {
 
 				<div id={styles.right}>
 					{
-						(isNext) ? <p><a onClick={this.goNext} className={styles.clickPreNextCursor}>Next&gt;&gt; </a></p> :
-							<p >Next&gt;&gt;</p>
+						(isNext) ? <p><a onClick={this.goNext} className={styles.clickPreNextCursor}>Next&gt;&gt;</a></p>
+							: <p >Next&gt;&gt;</p>
 					}
 				</div>
 			</div>

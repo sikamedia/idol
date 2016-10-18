@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 
 import ParticipantList from './components/ParticipantList'
 import ParticipantDetails from './components/ParticipantDetails'
-import FacebookLogin from 'react-facebook-login';
 import FacebookButton from 'components/facebook/FacebookButton'
 
 const apiURL = "http://api.tv4play.se";
@@ -14,8 +13,7 @@ class AppIdol extends Component {
 	constructor(props) {
 		super(props);
 	}
-
-
+	
 	render() {
 		return (
 			<div>
@@ -35,5 +33,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps)(AppIdol)
-//export connect(mapStateToProps)(ParticipantDetails)
+export default connect(mapStateToProps)(AppIdol);

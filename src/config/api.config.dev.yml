@@ -1,2 +1,5 @@
-tv4Play:
-  http://api.tv4play.se
+API:
+  tv4Play:
+      url: http://api.tv4play.se
+      idol: /site/programs/idol
+      videoAssets: /play/video_assets.json

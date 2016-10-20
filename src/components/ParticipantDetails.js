@@ -1,12 +1,13 @@
-import React, {Component} from 'react'
-import styles from '../../public/style.css'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import * as UIAction from '../actions/UIAction'
-import * as FetchParticipantAction from '../actions/FetchParticipantAction'
-import * as VideoAction from '../actions/VideoAction'
-import * as PaginationAction from '../actions/PaginationAction'
-import {StringOperator} from 'common/StringOperator'
+import React, {Component} from "react";
+import styles from "../../public/style.css";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import * as UIAction from "../actions/UIAction";
+import * as FetchParticipantAction from "../actions/FetchParticipantAction";
+import * as VideoAction from "../actions/VideoAction";
+import * as PaginationAction from "../actions/PaginationAction";
+import {StringOperator} from "common/StringOperator";
+import {Link} from "react-router";
 
 const stringOperator = new StringOperator();
 
@@ -16,18 +17,15 @@ export class ParticipantDetails extends Component {
 		super(props);
 		this.renderBackButton = this.renderBackButton.bind(this);
 		this.goBackToMain = this.goBackToMain.bind(this);
-
 	}
 
 	componentWillMount() {
+		console.log("ParticipantDetails", this.props.selectedParticipantTag, this.props.currentPage);
 		this.props.actions.videoAssetsRequest(this.props.selectedParticipantTag, this.props.currentPage)
 	}
 
-
 	render() {
-
 		return (
-
 			<div className={styles.container}>
 				{this.renderBackButton()}
 				<ParticipantInfo name={this.props.selectedParticipantName}
@@ -39,7 +37,6 @@ export class ParticipantDetails extends Component {
 								   results={this.props.videoAssets.results}
 								   goPage={this.props.actions.goPage}
 								   currentPage={this.props.currentPage}/>
-
 			</div>
 
 		);
@@ -52,10 +49,14 @@ export class ParticipantDetails extends Component {
 
 	renderBackButton() {
 		return (
-			<div className={styles.top}>
-				<h1 onClick={this.goBackToMain} style={{textDecoration: 'underline',
-					cursor: 'pointer', cursor: 'hand'}}>Back</h1>
-			</div>
+			<Link to="/idols">
+				<div className={styles.top}>
+					<h1 onClick={this.goBackToMain} style={{
+						textDecoration: 'underline',
+						cursor: 'pointer', cursor: 'hand'
+					}}>Back</h1>
+				</div>
+			</Link>
 		);
 	}
 
@@ -79,7 +80,8 @@ const mapStateToProps = (state) => {
 		selectedParticipantDescription: state.FetchParticipantReducer.selectedParticipantDescription,
 		selectedParticipantImageUrl: state.FetchParticipantReducer.selectedParticipantImageUrl,
 		videoAssets: state.VideoReducer.videoAssets,
-		currentPage: state.PaginationReducer.currentPage
+		currentPage: state.PaginationReducer.currentPage,
+		nameTag: state.routing.locationBeforeTransitions.state.nameTag
 	}
 }
 
@@ -87,7 +89,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction, ...PaginationAction}, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails);
 
 
 export class ParticipantInfo extends Component {
@@ -101,7 +103,6 @@ export class ParticipantInfo extends Component {
 	renderDescription = (text) => {
 		return (<h6>{text}</h6>);
 	}
-
 
 
 	render() {
@@ -137,17 +138,18 @@ export class ParticipantVideos extends Component {
 
 	}
 
-	addDefaultSrc(ev){
+	addDefaultSrc(ev) {
 		ev.target.src = './public/profile.png';
 	}
-	
+
 	renderVideoClip(item) {
 		return (
 			<a href={"http://www.tv4play.se/program/idol?video_id=".concat(item.id)}>
 				<li className={styles.item} key={item.id}>
 
 					<div>
-						<img onError={this.addDefaultSrc} src={item.image} style={{width: 288, height: 218}} alt={"video_image_".concat(item.id)}/>
+						<img onError={this.addDefaultSrc} src={item.image} style={{width: 288, height: 218}}
+							 alt={"video_image_".concat(item.id)}/>
 					</div>
 					<div><p>Title: {item.title}</p></div>
 					<div><p>Description: {item.description}</p></div>
@@ -181,18 +183,19 @@ export class ParticipantVideos extends Component {
 		return (
 			<div id={styles.container}>
 				<div id={styles.left}>
-					{(isPrevious) ? <p> <a  className={styles.clickPreNextCursor}> &lt;&lt;Previous</a> </p> :
-							<p> &lt;&lt;Previous</p>
+					{(isPrevious) ? <p><a className={styles.clickPreNextCursor}> &lt;&lt;Previous</a></p> :
+						<p> &lt;&lt;Previous</p>
 					}
 				</div>
 
 				<div id={styles.center}>
-					<p> <a>Page: {this.props.currentPage} </a></p>
+					<p><a>Page: {this.props.currentPage} </a></p>
 				</div>
 
 				<div id={styles.right}>
 					{
-						(isNext) ? <p><a onClick={this.goNext} className={styles.clickPreNextCursor}>Next&gt;&gt;</a></p>
+						(isNext) ?
+							<p><a onClick={this.goNext} className={styles.clickPreNextCursor}>Next&gt;&gt;</a></p>
 							: <p >Next&gt;&gt;</p>
 					}
 				</div>
@@ -204,7 +207,6 @@ export class ParticipantVideos extends Component {
 	goNext = (event) => {
 		console.log("Go to next!!!");
 	}
-
 
 
 	pagerInstance = (currentPage, totalPages) => {

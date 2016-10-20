@@ -13,13 +13,13 @@ class AppIdol extends Component {
 	constructor(props) {
 		super(props);
 	}
-	
+
 	render() {
 		return (
 			<div>
 				<FacebookButton />
 				<div>
-					{(this.props.showList) ?  <ParticipantList api={apiURL} /> : <ParticipantDetails/>}
+					{(this.props.showList) ?  <ParticipantList api={apiURL} /> : <ParticipantDetails />}
 				</div>
 			</div>
 
@@ -29,7 +29,8 @@ class AppIdol extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		showList: state.UIReducer.show
+		showList: state.UIReducer.show,
+		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag
 	}
 }
 

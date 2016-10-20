@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux'
 import * as UIAction from '../actions/UIAction'
 import * as FetchParticipantAction from '../actions/FetchParticipantAction'
 import * as VideoAction from '../actions/VideoAction'
+import {Link} from 'react-router'
 
 class ParticipantList extends Component {
 
@@ -15,6 +16,7 @@ class ParticipantList extends Component {
 		super(props);
 		this.onItemClicked = this.onItemClicked.bind(this);
 		this.renderParticipant = this.renderParticipant.bind(this);
+
 	}
 
 	componentWillMount() {
@@ -25,25 +27,19 @@ class ParticipantList extends Component {
 
 	onItemClicked = item => event => {
 
-
 		this.props.actions.setShowParticipant();
 		this.props.actions.selectParticipant(item.person_tag, item.name, item.description, item.image.url);
 
-
 	}
-
 
 	renderParticipant(item) {
 		return (
-			<li onClick={this.onItemClicked(item)} className={styles.item} key={item.person_tag}>
+			<Link to={{pathname: `/idol/${item.person_tag}`, state: {nameTag: item.person_tag} }} ><li onClick={this.onItemClicked(item)} className={styles.item} key={item.person_tag}>
 				<div className={styles.withBgSize} style={{backgroundImage: `url(${item.image.url})`}}></div>
 				<div className={styles.center}> {item.name} </div>
-			</li>
-
+			</li></Link>
 		);
 	}
-
-
 
 	render() {
 		//debugger;

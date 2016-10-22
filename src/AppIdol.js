@@ -1,12 +1,8 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-
-import ParticipantList from './components/ParticipantList'
-import ParticipantDetails from './components/ParticipantDetails'
-import FacebookButton from 'components/facebook/FacebookButton'
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import FacebookButton from "components/facebook/FacebookButton";
 
 const apiURL = "http://api.tv4play.se";
-
 
 class AppIdol extends Component {
 
@@ -19,12 +15,16 @@ class AppIdol extends Component {
 			<div>
 				<FacebookButton />
 				<div>
-					{(this.props.showList) ?  <ParticipantList api={apiURL} /> : <ParticipantDetails />}
+					{this.props.children}
 				</div>
 			</div>
 
 		);
 	}
+}
+
+AppIdol.propTypes = {
+	children: React.PropTypes.object
 }
 
 const mapStateToProps = (state) => {

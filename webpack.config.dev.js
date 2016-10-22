@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var node_dir = __dirname + '/node_modules';
 
 
 module.exports = {
@@ -21,6 +22,10 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
@@ -39,15 +44,19 @@ module.exports = {
       exclude: path.resolve(__dirname, 'node_modules'),
       include: path.join(__dirname, 'test')
     },
-
       {
       test: /\.css$/,
       loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'     
-    }, {test: /\.json$/, loaders: ['json-loader']},  { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' },]
+    },
+      {test: /\.json$/, loaders: ['json-loader']},
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+    ]
   },
   resolve: {
     alias: {
-      'sinon': 'sinon/pkg/sinon'
+      'sinon': 'sinon/pkg/sinon',
+      'fb': path.resolve(__dirname, 'lib/sdk.js'),
+      jquery: path.resolve(node_dir, "jquery/src/jquery")
     },
     root: path.resolve(__dirname, 'src'),
     extensions: ['', '.js', '.jsx']

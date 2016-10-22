@@ -13,6 +13,8 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer} from 'react-router-redux'
 import ParticipantList from './components/ParticipantList'
 import ParticipantDetails from './components/ParticipantDetails'
+import { composeWithDevTools } from 'redux-devtools-extension';
+import $ from 'jquery';
 
 const logger = createLogger();
 
@@ -25,7 +27,8 @@ const allReducers = combineReducers({PaginationReducer, UIReducer, FetchParticip
 //const allReducers = Object.assign({}, PaginationReducer,  UIReducer, FetchParticipantReducer, VideoReducer, {routing: routerReducer} );
 //let store = createStore(idolApp, applyMiddleware(thunk, logger));
 
-const store = createStore(allReducers, applyMiddleware(thunk, logger));
+const middleware = [thunk, logger];
+const store = createStore(allReducers, composeWithDevTools(applyMiddleware(...middleware)));
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
@@ -45,7 +48,7 @@ render(
 	<Provider store={store}>
 		<Router history={history}>
 			<Route path="/" component={AppIdol}>
-				<Route path="idols" component={ParticipantList} />
+				<IndexRoute component={ParticipantList} />
 				<Route path="idol/:nameTag" component={ParticipantDetails}/>
 			</Route>
 			<Route path="*" component={NotFound} />

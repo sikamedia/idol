@@ -66,6 +66,7 @@ ParticipantList.propTypes = {
 	})
 };
 
+
 function mapDispatchToProps(dispatch) {
 	return {actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction}, dispatch)}
 }

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, PropTypes} from "react";
 import styles from "../../public/style.css";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -8,6 +8,8 @@ import * as VideoAction from "../actions/VideoAction";
 import * as PaginationAction from "../actions/PaginationAction";
 import {StringOperator} from "common/StringOperator";
 import {Link} from "react-router";
+
+
 
 const stringOperator = new StringOperator();
 
@@ -49,7 +51,7 @@ export class ParticipantDetails extends Component {
 
 	renderBackButton() {
 		return (
-			<Link to="/idols">
+			<Link name="Tao" to="/">
 				<div className={styles.top}>
 					<h1 onClick={this.goBackToMain} style={{
 						textDecoration: 'underline',
@@ -69,7 +71,10 @@ ParticipantDetails.propTypes = {
 		prePage: React.PropTypes.func,
 		nextPage: React.PropTypes.func,
 		goPage: React.PropTypes.func
-	})
+	}),
+
+	goPage: PropTypes.func
+
 };
 
 const mapStateToProps = (state) => {
@@ -131,7 +136,6 @@ export class ParticipantVideos extends Component {
 		this.goNext = this.goNext.bind(this)
 
 	}
-
 
 	componentDidUpdate() {
 		this.props.goPage(this.props.currentPage, this.props.totalPages);

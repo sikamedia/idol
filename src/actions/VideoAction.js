@@ -15,6 +15,7 @@ export const videoAssetsRequest = (nameTage, pageNumber) => (dispatch, getState)
 		dispatch(requestSuccess(json))
 	}).catch((ex) => {
 		console.log('parsing failed', ex)
+		dispatch(requestFailure())
 	})
 }
 

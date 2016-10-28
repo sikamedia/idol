@@ -3,7 +3,8 @@ import {FETCH_POSTS_REQUEST_VIDEO, FETCH_POSTS_SUCCESS_VIDEO,
 
 const initialState = {
 	videoAssets: [],
-	isFetching: false
+	isFetching: false,
+	failure: false
 }
 
 const fetchVideoAssets = (state=initialState, action) => {
@@ -15,7 +16,7 @@ const fetchVideoAssets = (state=initialState, action) => {
 			return {...state, isFetching: false, videoAssets: action.videoAssets};
 
 		case FETCH_POSTS_FAILURE_VIDEO:
-			return state;
+			return {...state, failure: true};
 
 		default:
 			return state;

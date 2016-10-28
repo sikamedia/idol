@@ -55,10 +55,10 @@ module.exports = {
   resolve: {
     alias: {
       'sinon': 'sinon/pkg/sinon',
-      'fb': path.resolve(__dirname, 'lib/sdk.js'),
-      jquery: path.resolve(node_dir, "jquery/src/jquery")
+      'jquery': path.resolve(node_dir, "jquery/src/jquery"),
+      'sfacebook': path.join(__dirname, "src/components/facebook")
     },
-    root: path.resolve(__dirname, 'src'),
+    modulesDirectories: ['src', 'node_modules'],
     extensions: ['', '.js', '.jsx']
   },
   externals: {

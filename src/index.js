@@ -12,7 +12,7 @@ import createLogger from 'redux-logger';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore, routerReducer} from 'react-router-redux'
 import ParticipantList from './components/ParticipantList'
-import ParticipantDetails from './components/ParticipantDetails'
+import ParticipantDetails from './containers/ParticipantDetails'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import $ from 'jquery';
 

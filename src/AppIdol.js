@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import FacebookButton from "components/facebook/FacebookButton";
+import FacebookButton from "sfacebook/FacebookButton";
 
 const apiURL = "http://api.tv4play.se";
 

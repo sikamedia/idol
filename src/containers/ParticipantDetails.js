@@ -6,12 +6,9 @@ import * as UIAction from "../actions/UIAction";
 import * as FetchParticipantAction from "../actions/FetchParticipantAction";
 import * as VideoAction from "../actions/VideoAction";
 import * as PaginationAction from "../actions/PaginationAction";
-import {StringOperator} from "common/StringOperator";
 import {Link} from "react-router";
+import ParticipantInfo from "components/ParticipantInfo";
 
-
-
-const stringOperator = new StringOperator();
 
 export class ParticipantDetails extends Component {
 
@@ -22,8 +19,8 @@ export class ParticipantDetails extends Component {
 	}
 
 	componentWillMount() {
-		console.log("ParticipantDetails", this.props.selectedParticipantTag, this.props.currentPage);
-		this.props.actions.videoAssetsRequest(this.props.selectedParticipantTag, this.props.currentPage)
+		console.log("ParticipantDetails", this.props.nameTag, this.props.currentPage);
+		this.props.actions.videoAssetsRequest(this.props.nameTag, this.props.currentPage)
 	}
 
 	render() {
@@ -97,34 +94,6 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails);
 
 
-export class ParticipantInfo extends Component {
-
-	constructor(props) {
-		super(props);
-		this.convertTextArray = stringOperator.convertTextArray
-		this.convertTextArray = this.convertTextArray.bind(this);
-	}
-
-	renderDescription = (text) => {
-		return (<h6>{text}</h6>);
-	}
-
-
-	render() {
-		return (
-			<div className={styles.left}>
-				<ul>
-					<div className={styles.withBgSize} style={{backgroundImage: `url(${this.props.imageUrl})`}}></div>
-					<div><h3 style={{textAlign: 'left'}}> {this.props.name} </h3></div>
-					<div> {this.convertTextArray(this.props.description).map(this.renderDescription)}</div>
-				</ul>
-			</div>
-
-		);
-	}
-
-
-}
 
 export class ParticipantVideos extends Component {
 

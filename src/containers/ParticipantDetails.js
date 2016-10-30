@@ -9,6 +9,8 @@ import * as PaginationAction from "../actions/PaginationAction";
 import {Link} from "react-router";
 import ParticipantInfo from "components/ParticipantInfo";
 
+const public_dir = '../../public';
+
 
 export class ParticipantDetails extends Component {
 
@@ -19,7 +21,6 @@ export class ParticipantDetails extends Component {
 	}
 
 	componentWillMount() {
-		console.log("ParticipantDetails", this.props.nameTag, this.props.currentPage);
 		this.props.actions.videoAssetsRequest(this.props.nameTag, this.props.currentPage)
 	}
 
@@ -27,9 +28,10 @@ export class ParticipantDetails extends Component {
 		return (
 			<div className={styles.container}>
 				{this.renderBackButton()}
-				<ParticipantInfo name={this.props.selectedParticipantName}
-								 imageUrl={this.props.selectedParticipantImageUrl}
-								 description={this.props.selectedParticipantDescription}
+				<ParticipantInfo
+					name={this.props.selectedParticipantName}
+					imageUrl={this.props.selectedParticipantImageUrl}
+					description={this.props.selectedParticipantDescription}
 				/>
 				<ParticipantVideos totalPages={Math.ceil(this.props.videoAssets.total_hits / 12)}
 								   totalHits={this.props.videoAssets.total_hits}
@@ -112,17 +114,18 @@ export class ParticipantVideos extends Component {
 	}
 
 	addDefaultSrc(ev) {
-		ev.target.src = './public/profile.png';
+		ev.target.src = public_dir + '/profile.png';
+		ev.preventDefault();
 	}
 
 	renderVideoClip(item) {
 		return (
-			<a href={"http://www.tv4play.se/program/idol?video_id=".concat(item.id)}>
-				<li className={styles.item} key={item.id}>
+			<a key={item.id} href={"http://www.tv4play.se/program/idol?video_id=".concat(item.id)}>
+				<li className={styles.item} >
 
 					<div>
-						<img onError={this.addDefaultSrc} src={item.image} style={{width: 288, height: 218}}
-							 alt={"video_image_".concat(item.id)}/>
+						<img src={item.image} style={{width: 288, height: 218}}
+							 alt={"video_image_".concat(item.id)} onError={this.addDefaultSrc}/>
 					</div>
 					<div><p>Title: {item.title}</p></div>
 					<div><p>Description: {item.description}</p></div>

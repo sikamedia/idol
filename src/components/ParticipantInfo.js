@@ -1,8 +1,11 @@
 import React, {Component, PropTypes} from "react";
 import { StringOperator } from "../common/StringOperator";
 import styles from "../../public/style.css";
+//var Hashes = require('jshashes')
+import Hashes from "jshashes"
 
-const stringOperator = new StringOperator();
+const stringOperator = new StringOperator;
+const MD5 = new Hashes.MD5;
 
 export default class ParticipantInfo extends Component {
 
@@ -13,7 +16,8 @@ export default class ParticipantInfo extends Component {
 	}
 
 	renderDescription = (text) => {
-		return (<h6>{text}</h6>);
+		//return (<h6 key={ new Hashes.SHA1().b64(text)}>{text}</h6>);
+		return (<h6 key={MD5.hex(text)}>{text}</h6>);
 	}
 
 

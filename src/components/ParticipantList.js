@@ -26,15 +26,14 @@ class ParticipantList extends Component {
 	}
 
 	onItemClicked = item => event => {
-
-		this.props.actions.setShowParticipant();
+		//this.props.actions.setShowParticipant();
 		this.props.actions.selectParticipant(item.person_tag, item.name, item.description, item.image.url);
 
 	}
 
 	renderParticipant(item) {
 		return (
-			<Link to={{pathname: `/idol/${item.person_tag}`, state: {nameTag: item.person_tag} }} ><li onClick={this.onItemClicked(item)} className={styles.item} key={item.person_tag}>
+			<Link key={item.person_tag} to={{pathname: `/idol/${item.person_tag}`, state: {nameTag: item.person_tag} }} ><li onClick={this.onItemClicked(item)} className={styles.item} >
 				<div className={styles.withBgSize} style={{backgroundImage: `url(${item.image.url})`}}></div>
 				<div className={styles.center}> {item.name} </div>
 			</li></Link>
@@ -47,7 +46,7 @@ class ParticipantList extends Component {
 			<div>
 				<ul className={styles.container}>
 					{
-						this.props.participants.map(this.renderParticipant)
+						this.props.participants.map( (item) => this.renderParticipant (item))
 					}
 				</ul>
 			</div>

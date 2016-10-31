@@ -5,16 +5,16 @@ export const SELECT_PARTICIPANT = 'SELECT_PARTICIPANT';
 
 export const request = () => (dispatch, getState) => {
 
-	let fetchPostsRequest = {type: FETCH_POSTS_REQUEST};
+	let fetchPostsRequestType = {type: FETCH_POSTS_REQUEST};
 
-	dispatch (fetchPostsRequest);
+	dispatch (fetchPostsRequestType);
 
 	fetch("http://api.tv4play.se/site/programs/idol").then(function (response) {
 		return response.json()
 	}).then((json) => {
 		dispatch(requestSuccess(json.participant_groups[0].participants))
 	}).catch((ex) => {
-		console.log('parsing failed', ex)
+		console.log('fetching idols failed', ex)
 	})
 }
 

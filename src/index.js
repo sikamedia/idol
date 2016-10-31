@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import AppIdol from './AppIdol'
 import PaginationReducer from './reducers/PaginationReducer'
 import UIReducer from './reducers/UIReducer'
-import FetchParticipantReducer from './reducers/FetchParticipantReducer'
+import FetchParticipantReducer from './reducers/FetchParticipantsReducer'
 import VideoReducer from './reducers/VideoReducer'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
@@ -22,7 +22,7 @@ const NotFound = () => { return (<h1>404.. This page is not found!</h1>) }
 
 
 //const allReducers = combineReducers({PaginationReducer, UIReducer, FetchParticipantReducer, VideoReducer});
-const allReducers = combineReducers({PaginationReducer, UIReducer, FetchParticipantReducer, VideoReducer, routing: routerReducer});
+const allReducers = combineReducers({PaginationReducer, FetchParticipantReducer, VideoReducer, routing: routerReducer});
 
 //const allReducers = Object.assign({}, PaginationReducer,  UIReducer, FetchParticipantReducer, VideoReducer, {routing: routerReducer} );
 //let store = createStore(idolApp, applyMiddleware(thunk, logger));

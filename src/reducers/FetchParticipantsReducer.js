@@ -1,5 +1,5 @@
 import {FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS,
-	FETCH_POSTS_FAILURE, SELECT_PARTICIPANT} from '../actions/FetchParticipantAction'
+	FETCH_POSTS_FAILURE, SELECT_PARTICIPANT} from '../actions/FetchParticipantsAction'
 
 const initialState = {
 	participants: [],
@@ -8,7 +8,6 @@ const initialState = {
 	selectedParticipantName: '',
 	selectedParticipantDescription: '',
 	selectedParticipantImageUrl: ''
-
 }
 
 const fetchParticipant = (state=initialState, action) => {

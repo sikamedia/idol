@@ -29,7 +29,6 @@ AppIdol.propTypes = {
 
 const mapStateToProps = (state) => {
 	return {
-		showList: state.UIReducer.show,
 		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag
 	}
 }

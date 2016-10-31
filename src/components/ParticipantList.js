@@ -5,7 +5,7 @@ import 'whatwg-fetch'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as UIAction from '../actions/UIAction'
-import * as FetchParticipantAction from '../actions/FetchParticipantAction'
+import * as FetchParticipantAction from '../actions/FetchParticipantsAction'
 import * as VideoAction from '../actions/VideoAction'
 import {Link} from 'react-router'
 
@@ -20,9 +20,7 @@ class ParticipantList extends Component {
 	}
 
 	componentWillMount() {
-
 		this.props.actions.request();
-
 	}
 
 	onItemClicked = item => event => {
@@ -58,7 +56,7 @@ class ParticipantList extends Component {
 //react proptypes
 ParticipantList.propTypes = {
 	actions: React.PropTypes.shape({
-		setShowParticipant: React.PropTypes.func,
+		//setShowParticipant: React.PropTypes.func,
 		request: React.PropTypes.func,
 		selectParticipant: React.PropTypes.func,
 		videoAssetsRequest: React.PropTypes.func
@@ -67,7 +65,7 @@ ParticipantList.propTypes = {
 
 
 function mapDispatchToProps(dispatch) {
-	return {actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction}, dispatch)}
+	return {actions: bindActionCreators({...FetchParticipantAction, ...VideoAction}, dispatch)}
 }
 
 const mapStateToProps = (state) => {

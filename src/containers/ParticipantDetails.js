@@ -3,7 +3,7 @@ import styles from "../../public/style.css";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as UIAction from "../actions/UIAction";
-import * as FetchParticipantAction from "../actions/FetchParticipantAction";
+import * as FetchParticipantAction from "../actions/FetchParticipantsAction";
 import * as VideoAction from "../actions/VideoAction";
 import * as PaginationAction from "../actions/PaginationAction";
 import {Link} from "react-router";
@@ -18,13 +18,35 @@ export class ParticipantDetails extends Component {
 		super(props);
 		this.renderBackButton = this.renderBackButton.bind(this);
 		this.goBackToMain = this.goBackToMain.bind(this);
+
+		if (this.props.selectedParticipantName === "") {
+			debugger
+			this.props.actions.request();
+		//this.props.actions.selectParticipant();
+
+
+
+
+
+		}
+
 	}
 
 	componentWillMount() {
 		this.props.actions.videoAssetsRequest(this.props.nameTag, this.props.currentPage)
+
 	}
 
 	render() {
+		debugger
+		console.log("aaaaaa", state);
+		console.log("bbbbb", this.props.nameTag)
+
+		console.log("hhahahah", this.props.participants, this.props.nameTag);
+		console.log("cccccc", this.props.participants)
+
+		let participant = this.searchSelectedParticipant(this.props.participants, this.props.nameTag);
+		console.log("lalalalalala", participant);
 		return (
 			<div className={styles.container}>
 				{this.renderBackButton()}
@@ -48,6 +70,10 @@ export class ParticipantDetails extends Component {
 		this.props.actions.setShowParticipant();
 	}
 
+	searchSelectedParticipant = (participants, searchNameTag) => {
+		participants.find(participant => participant.person_tag === searchNameTag);
+	}
+
 	renderBackButton() {
 		return (
 			<Link name="Tao" to="/">
@@ -65,7 +91,8 @@ export class ParticipantDetails extends Component {
 
 ParticipantDetails.propTypes = {
 	actions: React.PropTypes.shape({
-		setShowParticipant: React.PropTypes.func,
+		request: React.PropTypes.func,
+		selectParticipant: React.PropTypes.func,
 		videoAssetsRequest: React.PropTypes.func,
 		prePage: React.PropTypes.func,
 		nextPage: React.PropTypes.func,
@@ -79,6 +106,7 @@ ParticipantDetails.propTypes = {
 const mapStateToProps = (state) => {
 
 	return {
+		participants: state.FetchParticipantReducer.participants,
 		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag,
 		selectedParticipantName: state.FetchParticipantReducer.selectedParticipantName,
 		selectedParticipantDescription: state.FetchParticipantReducer.selectedParticipantDescription,
@@ -90,10 +118,11 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {actions: bindActionCreators({...UIAction, ...FetchParticipantAction, ...VideoAction, ...PaginationAction}, dispatch)}
+	return {actions: bindActionCreators({...FetchParticipantAction, ...VideoAction, ...PaginationAction}, dispatch)}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails);
+
 
 
 

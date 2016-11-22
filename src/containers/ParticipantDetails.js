@@ -20,12 +20,9 @@ export class ParticipantDetails extends Component {
 		this.goBackToMain = this.goBackToMain.bind(this);
 
 		if (this.props.selectedParticipantName === "") {
-			debugger
-			this.props.actions.request();
-		//this.props.actions.selectParticipant();
 
-
-
+			this.props.actions.findParticipantRequest(this.props.nameTag);
+			//this.props.actions.selectParticipant();
 
 
 		}
@@ -38,15 +35,7 @@ export class ParticipantDetails extends Component {
 	}
 
 	render() {
-		debugger
-		console.log("aaaaaa", state);
-		console.log("bbbbb", this.props.nameTag)
 
-		console.log("hhahahah", this.props.participants, this.props.nameTag);
-		console.log("cccccc", this.props.participants)
-
-		let participant = this.searchSelectedParticipant(this.props.participants, this.props.nameTag);
-		console.log("lalalalalala", participant);
 		return (
 			<div className={styles.container}>
 				{this.renderBackButton()}
@@ -92,25 +81,26 @@ export class ParticipantDetails extends Component {
 ParticipantDetails.propTypes = {
 	actions: React.PropTypes.shape({
 		request: React.PropTypes.func,
+		findParticipantRequest: React.PropTypes.func,
 		selectParticipant: React.PropTypes.func,
 		videoAssetsRequest: React.PropTypes.func,
 		prePage: React.PropTypes.func,
 		nextPage: React.PropTypes.func,
 		goPage: React.PropTypes.func
-	}),
+	}).isRequired,
 
-	goPage: PropTypes.func
+	nameTag: React.PropTypes.string
 
 };
 
 const mapStateToProps = (state) => {
 
 	return {
-		participants: state.FetchParticipantReducer.participants,
-		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag,
-		selectedParticipantName: state.FetchParticipantReducer.selectedParticipantName,
-		selectedParticipantDescription: state.FetchParticipantReducer.selectedParticipantDescription,
-		selectedParticipantImageUrl: state.FetchParticipantReducer.selectedParticipantImageUrl,
+		participants: state.FetchParticipantsReducer.participants,
+		selectedParticipantTag: state.FetchParticipantsReducer.selectedParticipantTag,
+		selectedParticipantName: state.FetchParticipantsReducer.selectedParticipantName,
+		selectedParticipantDescription: state.FetchParticipantsReducer.selectedParticipantDescription,
+		selectedParticipantImageUrl: state.FetchParticipantsReducer.selectedParticipantImageUrl,
 		videoAssets: state.VideoReducer.videoAssets,
 		currentPage: state.PaginationReducer.currentPage,
 		nameTag: state.routing.locationBeforeTransitions.state.nameTag

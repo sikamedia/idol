@@ -1,5 +1,5 @@
 import {FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS,
-	FETCH_POSTS_FAILURE, SELECT_PARTICIPANT} from '../actions/FetchParticipantsAction'
+	FETCH_POSTS_FAILURE, SELECT_PARTICIPANT} from '../actions/FetchParticipantsAction';
 
 const initialState = {
 	participants: [],
@@ -10,7 +10,7 @@ const initialState = {
 	selectedParticipantImageUrl: ''
 }
 
-const fetchParticipant = (state=initialState, action) => {
+const fetchParticipants = (state=initialState, action) => {
 	switch (action.type) {
 		case FETCH_POSTS_REQUEST:
 			return {...state, isFetching: true};
@@ -30,4 +30,4 @@ const fetchParticipant = (state=initialState, action) => {
 	}
 }
 
-export default  fetchParticipant;
+export default  fetchParticipants;

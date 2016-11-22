@@ -71,8 +71,8 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = (state) => {
 
 	return {
-		participants: state.FetchParticipantReducer.participants,
-		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag,
+		participants: state.FetchParticipantsReducer.participants,
+		selectedParticipantTag: state.FetchParticipantsReducer.selectedParticipantTag,
 		videoAssets: state.VideoReducer.videoAssets
 	}
 }

@@ -24,13 +24,7 @@ class AppIdol extends Component {
 }
 
 AppIdol.propTypes = {
-	children: React.PropTypes.object
+	children: React.PropTypes.element.isRequired
 }
 
-const mapStateToProps = (state) => {
-	return {
-		selectedParticipantTag: state.FetchParticipantReducer.selectedParticipantTag
-	}
-}
-
-export default connect(mapStateToProps)(AppIdol);
+export default connect()(AppIdol);

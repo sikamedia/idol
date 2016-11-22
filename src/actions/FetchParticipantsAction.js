@@ -10,12 +10,43 @@ export const request = () => (dispatch, getState) => {
 	dispatch (fetchPostsRequestType);
 
 	fetch("http://api.tv4play.se/site/programs/idol").then(function (response) {
-		return response.json()
+		return response.json();
 	}).then((json) => {
-		dispatch(requestSuccess(json.participant_groups[0].participants))
+		dispatch(requestSuccess(json.participant_groups[0].participants));
 	}).catch((ex) => {
 		console.log('fetching idols failed', ex)
+		dispatch(requestFailure());
 	})
+}
+
+export const findParticipantRequest = (person_tag) => (dispatch, getState) => {
+	let fetchPostsRequestType = {type: FETCH_POSTS_REQUEST};
+
+	dispatch (fetchPostsRequestType);
+
+	fetch("http://api.tv4play.se/site/programs/idol").then(function (response) {
+		return response.json()
+	}).then((json) => {
+
+		let searchedElement = search(person_tag, json.participant_groups[0].participants);
+		dispatch(selectParticipant(searchedElement.person_tag, searchedElement.name, searchedElement.description,
+			searchedElement.image.url));
+	}).catch((ex) => {
+		console.log('find participant failed', ex)
+	})
+
+}
+
+const search = (person_tag, participants)  => {
+	let result = null;
+	participants.some(element => {
+
+		if(element.person_tag === person_tag) {
+			result = element;
+			return true;
+		}
+	});
+	return result;
 }
 
 export const requestSuccess = (participants) => {

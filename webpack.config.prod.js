@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var node_dir = __dirname + '/node_modules';
 
 module.exports = {
   devtool: 'source-map',
@@ -29,6 +30,18 @@ module.exports = {
       test: /\.js$/,
       loaders: ['babel'],
       include: path.join(__dirname, 'src')
-    }]
-  }
+    },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+      }]
+  },
+  resolve: {
+    alias: {
+      'jquery': path.resolve(node_dir, "jquery/src/jquery"),
+      'sfacebook': path.join(__dirname, "src/components/facebook")
+    },
+    modulesDirectories: ['src', 'node_modules'],
+    extensions: ['', '.js', '.jsx']
+  },
 };

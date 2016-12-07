@@ -7,6 +7,11 @@ import Hashes from "jshashes"
 const stringOperator = new StringOperator;
 const MD5 = new Hashes.MD5;
 
+const public_dir = '../../public';
+import profile_tao from '../../public/profile.png';
+
+console.log("profile tao picture: ", profile_tao);
+
 export default class ParticipantInfo extends Component {
 
 	constructor(props) {
@@ -29,9 +34,11 @@ export default class ParticipantInfo extends Component {
 					<div><h3 style={{textAlign: 'left'}}> {this.props.name} </h3></div>
 					<div> {this.convertTextArray(this.props.description).map(this.renderDescription)}</div>
 				</ul>
+				<div>
+					<img src={profile_tao} />
+				</div>
 			</div>
 
 		);
 	}
-
 }

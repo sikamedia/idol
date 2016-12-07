@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from "react";
 
 export default class FacebookButton extends Component {
 
@@ -15,9 +15,11 @@ export default class FacebookButton extends Component {
 
 	componentDidMount() {
 
+		console.log("My name is....");
+
 		FB.getLoginStatus((response) => {
 			if (response.status === 'connected') {
-				console.log(response);
+				console.log("FB login" + response);
 				FB.api('/me', (response) => {
 					let message = "Welcome " + response.name;
 					this.setState({
@@ -35,15 +37,13 @@ export default class FacebookButton extends Component {
 
 	onStatusChange = (response) => {
 
-		console.log(response);
-
 		if (response.status === 'connected') {
 
-				FB.api('/me', (response) => {
-					let message = "Welcome " + response.name;
-					this.setState({
-						message: message
-					});
+			FB.api('/me', (response) => {
+				let message = "Welcome " + response.name;
+				this.setState({
+					message: message
+				});
 			});
 		}
 	}
@@ -51,7 +51,8 @@ export default class FacebookButton extends Component {
 	render() {
 		return (
 			<div>
-				<div className="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true"></div>
+				<div className="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false"
+				     data-auto-logout-link="true"></div>
 				<div>{this.state.message}</div>
 			</div>
 

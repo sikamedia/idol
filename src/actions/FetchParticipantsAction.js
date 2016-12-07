@@ -7,7 +7,7 @@ export const request = () => (dispatch, getState) => {
 
 	let fetchPostsRequestType = {type: FETCH_POSTS_REQUEST};
 
-	dispatch (fetchPostsRequestType);
+	dispatch(fetchPostsRequestType);
 
 	fetch("http://api.tv4play.se/site/programs/idol").then(function (response) {
 		return response.json();
@@ -22,7 +22,7 @@ export const request = () => (dispatch, getState) => {
 export const findParticipantRequest = (person_tag) => (dispatch, getState) => {
 	let fetchPostsRequestType = {type: FETCH_POSTS_REQUEST};
 
-	dispatch (fetchPostsRequestType);
+	dispatch(fetchPostsRequestType);
 
 	fetch("http://api.tv4play.se/site/programs/idol").then(function (response) {
 		return response.json()
@@ -37,11 +37,11 @@ export const findParticipantRequest = (person_tag) => (dispatch, getState) => {
 
 }
 
-const search = (person_tag, participants)  => {
+const search = (person_tag, participants) => {
 	let result = null;
 	participants.some(element => {
 
-		if(element.person_tag === person_tag) {
+		if (element.person_tag === person_tag) {
 			result = element;
 			return true;
 		}

@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from "react";
 import styles from "../../public/style.css";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as UIAction from "../actions/UIAction";
 import * as FetchParticipantAction from "../actions/FetchParticipantsAction";
 import * as VideoAction from "../actions/VideoAction";
 import * as PaginationAction from "../actions/PaginationAction";
@@ -17,7 +16,6 @@ export class ParticipantDetails extends Component {
 	constructor(props) {
 		super(props);
 		this.renderBackButton = this.renderBackButton.bind(this);
-		this.goBackToMain = this.goBackToMain.bind(this);
 
 		if (this.props.selectedParticipantName === "") {
 
@@ -45,19 +43,17 @@ export class ParticipantDetails extends Component {
 					description={this.props.selectedParticipantDescription}
 				/>
 				<ParticipantVideos totalPages={Math.ceil(this.props.videoAssets.total_hits / 12)}
-								   totalHits={this.props.videoAssets.total_hits}
-								   results={this.props.videoAssets.results}
-								   goPage={this.props.actions.goPage}
-								   currentPage={this.props.currentPage}/>
+				                   totalHits={this.props.videoAssets.total_hits}
+				                   results={this.props.videoAssets.results}
+				                   goPage={this.props.actions.goPage}
+				                   currentPage={this.props.currentPage}/>
 			</div>
+
 
 		);
 
 	}
 
-	goBackToMain = event => {
-		this.props.actions.setShowParticipant();
-	}
 
 	searchSelectedParticipant = (participants, searchNameTag) => {
 		participants.find(participant => participant.person_tag === searchNameTag);
@@ -67,7 +63,7 @@ export class ParticipantDetails extends Component {
 		return (
 			<Link name="Tao" to="/">
 				<div className={styles.top}>
-					<h1 onClick={this.goBackToMain} style={{
+					<h1 style={{
 						textDecoration: 'underline',
 						cursor: 'pointer', cursor: 'hand'
 					}}>Back</h1>
@@ -102,7 +98,7 @@ const mapStateToProps = (state) => {
 		selectedParticipantDescription: state.FetchParticipantsReducer.selectedParticipantDescription,
 		selectedParticipantImageUrl: state.FetchParticipantsReducer.selectedParticipantImageUrl,
 		videoAssets: state.VideoReducer.videoAssets,
-		currentPage: state.PaginationReducer.currentPage,
+		currentPage: state.pagination.currentPage,
 		nameTag: state.routing.locationBeforeTransitions.state.nameTag
 	}
 }
@@ -112,8 +108,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ParticipantDetails);
-
-
 
 
 export class ParticipantVideos extends Component {
@@ -133,22 +127,20 @@ export class ParticipantVideos extends Component {
 	}
 
 	addDefaultSrc(ev) {
-		ev.target.src = public_dir + '/profile.png';
+;		ev.target.src = public_dir + '/profile.png';
 		ev.preventDefault();
 	}
 
 	renderVideoClip(item) {
 		return (
 			<a key={item.id} href={"http://www.tv4play.se/program/idol?video_id=".concat(item.id)}>
-				<li className={styles.item} >
-
+				<li className={styles.item}>
 					<div>
 						<img src={item.image} style={{width: 288, height: 218}}
-							 alt={"video_image_".concat(item.id)} onError={this.addDefaultSrc}/>
+						     alt={"video_image_".concat(item.id)} onError={this.addDefaultSrc}/>
 					</div>
 					<div><p>Title: {item.title}</p></div>
 					<div><p>Description: {item.description}</p></div>
-
 				</li>
 			</a>
 
@@ -158,7 +150,6 @@ export class ParticipantVideos extends Component {
 	render() {
 
 		return (
-
 			<div className={styles.right}>
 				{this.pagerInstance(this.props.currentPage, this.props.totalPages)}
 				<ul>
@@ -168,8 +159,6 @@ export class ParticipantVideos extends Component {
 
 				</ul>
 			</div>
-
-
 		);
 	}
 
@@ -221,6 +210,5 @@ export class ParticipantVideos extends Component {
 		}
 
 	}
-
 
 }

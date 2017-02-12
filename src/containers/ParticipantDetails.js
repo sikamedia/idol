@@ -7,6 +7,8 @@ import * as VideoAction from "../actions/VideoAction";
 import * as PaginationAction from "../actions/PaginationAction";
 import {Link} from "react-router";
 import ParticipantInfo from "components/ParticipantInfo";
+import profile_tao from '../../public/profile.png';
+
 
 const public_dir = '../../public';
 
@@ -35,20 +37,26 @@ export class ParticipantDetails extends Component {
 	render() {
 
 		return (
-			<div className={styles.container}>
-				{this.renderBackButton()}
-				<ParticipantInfo
-					name={this.props.selectedParticipantName}
-					imageUrl={this.props.selectedParticipantImageUrl}
-					description={this.props.selectedParticipantDescription}
-				/>
-				<ParticipantVideos totalPages={Math.ceil(this.props.videoAssets.total_hits / 12)}
-				                   totalHits={this.props.videoAssets.total_hits}
-				                   results={this.props.videoAssets.results}
-				                   goPage={this.props.actions.goPage}
-				                   currentPage={this.props.currentPage}/>
-			</div>
+			<div>
+				<div>
+					{this.renderBackButton()}
+				</div>
+				<div>
+					<div className={styles.container}>
 
+						<ParticipantInfo
+							name={this.props.selectedParticipantName}
+							imageUrl={this.props.selectedParticipantImageUrl}
+							description={this.props.selectedParticipantDescription}
+						/>
+						<ParticipantVideos totalPages={Math.ceil(this.props.videoAssets.total_hits / 12)}
+						                   totalHits={this.props.videoAssets.total_hits}
+						                   results={this.props.videoAssets.results}
+						                   goPage={this.props.actions.goPage}
+						                   currentPage={this.props.currentPage}/>
+					</div>
+				</div>
+			</div>
 
 		);
 
@@ -115,9 +123,12 @@ export class ParticipantVideos extends Component {
 	constructor(props) {
 		super(props);
 		this.pagerInstance = this.pagerInstance.bind(this);
+		this.addDefaultSrc = this.addDefaultSrc.bind(this);
 		this.renderVideoClip = this.renderVideoClip.bind(this);
 		this.renderPager = this.renderPager.bind(this)
 		this.goNext = this.goNext.bind(this)
+
+		this.state = {error: false};
 
 	}
 
@@ -127,8 +138,21 @@ export class ParticipantVideos extends Component {
 	}
 
 	addDefaultSrc(ev) {
-;		ev.target.src = public_dir + '/profile.png';
 		ev.preventDefault();
+		if (this.count > 0) {
+
+			this.img.onerror = null;
+			return;
+		}
+		ev.target.src = {profile_tao};
+		console.log(ev.target.src.toString());
+		this.count++;
+	}
+
+	imageError = (e) => {
+		this.setState({error: true});
+		console.log(this.state);
+		console.log(e);
 	}
 
 	renderVideoClip(item) {
@@ -137,7 +161,11 @@ export class ParticipantVideos extends Component {
 				<li className={styles.item}>
 					<div>
 						<img src={item.image} style={{width: 288, height: 218}}
-						     alt={"video_image_".concat(item.id)} onError={this.addDefaultSrc}/>
+						     alt={"video_image_".concat(item.id)} onError={this.imageError}
+						     ref={(img) => {
+							     this.img = img;
+							     this.count = 0;
+						     }}/>
 					</div>
 					<div><p>Title: {item.title}</p></div>
 					<div><p>Description: {item.description}</p></div>

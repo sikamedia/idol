@@ -9,6 +9,7 @@ const MD5 = new Hashes.MD5;
 
 const public_dir = '../../public';
 import profile_tao from '../../public/profile.png';
+import idolPic from '../../public/idol.jpeg';
 
 console.log("profile tao picture: ", profile_tao);
 
@@ -36,6 +37,7 @@ export default class ParticipantInfo extends Component {
 				</ul>
 				<div>
 					<img src={profile_tao} />
+					<img src={idolPic} />
 				</div>
 			</div>
 

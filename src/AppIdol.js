@@ -13,7 +13,6 @@ class AppIdol extends Component {
 	render() {
 		return (
 			<div>
-				<FacebookButton />
 				<div>
 					{this.props.children}
 				</div>

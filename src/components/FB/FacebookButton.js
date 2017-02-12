@@ -51,7 +51,7 @@ export default class FacebookButton extends Component {
 	render() {
 		return (
 			<div>
-				<div className="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false"
+				<div className="fb-login-butXXton" data-max-rows="1" data-size="medium" data-show-faces="false"
 				     data-auto-logout-link="true"></div>
 				<div>{this.state.message}</div>
 			</div>

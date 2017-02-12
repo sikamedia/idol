@@ -41,6 +41,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 //history.listen(location => analyticsService.track(location.pathname))
 
+//console log enables the printing of log, window log
 const handleChange = () => {
 	const currentValue = store.getState();
 	window.state = currentValue;

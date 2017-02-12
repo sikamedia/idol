@@ -59,8 +59,7 @@ module.exports = {
 					'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
 				]
 			},
-			{test: /\.json$/, loaders: ['json-loader']},
-			{test: /\.(png|gif|jpe?g)$/, loader: 'url-loader?limit=25000'}
+			{test: /\.json$/, loaders: ['json-loader']}
 		]
 	},
 	resolve: {

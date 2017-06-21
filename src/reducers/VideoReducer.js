@@ -1,27 +1,29 @@
-import {FETCH_POSTS_REQUEST_VIDEO, FETCH_POSTS_SUCCESS_VIDEO,
-	FETCH_POSTS_FAILURE_VIDEO} from '../actions/VideoAction'
+import {
+  FETCH_POSTS_REQUEST_VIDEO, FETCH_POSTS_SUCCESS_VIDEO,
+  FETCH_POSTS_FAILURE_VIDEO,
+} from '../actions/VideoAction';
 
 const initialState = {
-	videoAssets: [],
-	isFetching: false,
-	failure: false
+  videoAssets: [],
+  isFetching: false,
+  failure: false,
 }
 
-const fetchVideoAssets = (state=initialState, action) => {
-	switch (action.type) {
-		case FETCH_POSTS_REQUEST_VIDEO:
-			return {...state, isFetching: true};
+const fetchVideoAssets = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_POSTS_REQUEST_VIDEO:
+      return { ...state, isFetching: true };
 
-		case FETCH_POSTS_SUCCESS_VIDEO:
-			return {...state, isFetching: false, videoAssets: action.videoAssets};
+    case FETCH_POSTS_SUCCESS_VIDEO:
+      return { ...state, isFetching: false, videoAssets: action.videoAssets };
 
-		case FETCH_POSTS_FAILURE_VIDEO:
-			return {...state, failure: true};
+    case FETCH_POSTS_FAILURE_VIDEO:
+      return { ...state, failure: true };
 
-		default:
-			return state;
+    default:
+      return state;
 
-	}
+  }
 }
 
-export default  fetchVideoAssets;
+export default fetchVideoAssets;

@@ -1,8 +1,8 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import FacebookButton from "sfacebook/FacebookButton";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import FacebookButton from 'sfacebook/FacebookButton';
 
-const apiURL = "http://api.tv4play.se";
+const apiURL = 'http://api.tv4play.se';
 
 class AppIdol extends Component {
 
@@ -23,7 +23,7 @@ class AppIdol extends Component {
 }
 
 AppIdol.propTypes = {
-  children: React.PropTypes.element.isRequired
-}
+  children: React.PropTypes.element.isRequired,
+};
 
 export default connect()(AppIdol);

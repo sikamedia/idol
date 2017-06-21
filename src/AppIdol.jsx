@@ -6,24 +6,24 @@ const apiURL = "http://api.tv4play.se";
 
 class AppIdol extends Component {
 
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
-	render() {
-		return (
-			<div>
-				<div>
-					{this.props.children}
-				</div>
-			</div>
+  render() {
+    return (
+      <div>
+        <div>
+          {this.props.children}
+        </div>
+      </div>
 
-		);
-	}
+    );
+  }
 }
 
 AppIdol.propTypes = {
-	children: React.PropTypes.element.isRequired
+  children: React.PropTypes.element.isRequired
 }
 
 export default connect()(AppIdol);
